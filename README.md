@@ -5,8 +5,9 @@ An Arduino-based robot controlled over Serial commands, with real-time visual fe
 ## Project Structure
 
 ```
-sixth_sense_bot/          Arduino sketch (firmware)
-color_tracker/            Python webcam controller (sends Serial commands)
+sixth_sense_bot.ino       Arduino sketch (firmware)
+color_tracker.py          Python webcam controller (sends Serial commands)
+requirements.txt          Python dependencies
 ```
 
 ## Features
@@ -38,26 +39,28 @@ The board listens on Serial (9600 baud) for single-character commands. On each c
 
 ## Firmware setup (Arduino)
 
-1. Open `sixth_sense_bot/sixth_sense_bot.ino` in the Arduino IDE (or VS Code with the Arduino extension)
+1. Open `sixth_sense_bot.ino` in the Arduino IDE (or VS Code with the Arduino extension)
 2. Select your board and port
 3. Upload the sketch
 
 ## Computer Vision controller (Python)
 
-`color_tracker/color_tracker.py` opens your webcam, tracks a chosen color object, and sends `F`/`B`/`L`/`R`/`S` over Serial to the Arduino based on which on-screen zone the object is in.
+`color_tracker.py` opens your webcam, tracks a chosen color object, and sends `F`/`B`/`L`/`R`/`S` over Serial to the Arduino based on which on-screen zone the object is in.
 
 1. Install dependencies:
    ```
-   pip install -r color_tracker/requirements.txt
+   pip install -r requirements.txt
    ```
-2. Open `color_tracker/color_tracker.py` and set `SERIAL_PORT` to your Arduino's port
+2. Open `color_tracker.py` and set `SERIAL_PORT` to your Arduino's port
    (Windows: `COM3`, `COM4`... / Mac-Linux: `/dev/ttyUSB0` or `/dev/ttyACM0`)
 3. Run it:
    ```
-   python color_tracker/color_tracker.py
+   python color_tracker.py
    ```
 4. Pick a color from the menu, hold up a matching colored object in front of the webcam, and move it across the on-screen zones (up/down/left/right/middle) to drive the bot. Press `ESC` to quit.
 
-## License
+## © Copyright
 
-MIT
+© 2026 Abhay Raj. All Rights Reserved.
+
+This project, including its source code, documentation, and original implementation, is the intellectual property of Abhay Raj. Unauthorized copying, reproduction, modification, redistribution, or commercial use of this project or any substantial part of it is prohibited without prior written permission from the author.
