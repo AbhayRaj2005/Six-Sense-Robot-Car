@@ -2,13 +2,11 @@
 
 An Arduino-based robot controlled over Serial commands, with real-time visual feedback on an onboard LED Matrix and an indicator LED — driven by a webcam color-tracking controller.
 
-## Project Structure
+> **Note:** Source code for this project is private. This README documents the project for showcase purposes.
 
-```
-sixth_sense_bot.ino       Arduino sketch (firmware)
-color_tracker.py          Python webcam controller (sends Serial commands)
-requirements.txt          Python dependencies
-```
+## Overview
+
+The bot is controlled by a webcam-based color-tracking controller running on a PC. A colored object is tracked in real time using OpenCV; depending on which on-screen zone (Up/Down/Left/Right/Middle) the object is in, a single-character command is sent over Serial to the Arduino. The Arduino then drives the motors accordingly and shows live directional feedback on its onboard LED Matrix.
 
 ## Features
 
@@ -16,7 +14,7 @@ requirements.txt          Python dependencies
 - Live directional feedback via `Arduino_LED_Matrix` (arrow icons + stop icon)
 - LED blink feedback synced to each movement command
 - Simple dual-motor driver logic (2 motors, 4 direction pins)
-- Webcam color-object tracking controller (Python) that drives the bot by moving a colored object across on-screen zones
+- Webcam color-object tracking controller (Python/OpenCV) that drives the bot by moving a colored object across on-screen zones
 
 ## Hardware
 
@@ -28,7 +26,7 @@ requirements.txt          Python dependencies
 | Motor B IN2         | 10  |
 | Status LED           | 13  |
 
-Board: Arduino with built-in LED Matrix support (e.g. Arduino UNO R4 WiFi).
+Board: Arduino UNO R4 (built-in LED Matrix support required).
 
 ## How the firmware works
 
@@ -37,30 +35,10 @@ The board listens on Serial (9600 baud) for single-character commands. On each c
 2. Renders the matching arrow/stop bitmap on the LED matrix
 3. Blinks the status LED a number of times unique to that command
 
-## Firmware setup (Arduino)
+## How the Computer Vision controller works
 
-1. Open `sixth_sense_bot.ino` in the Arduino IDE (or VS Code with the Arduino extension)
-2. Select your board and port
-3. Upload the sketch
+A Python script opens the webcam, tracks a chosen color object using HSV masking and contour detection, and sends `F`/`B`/`L`/`R`/`S` over Serial to the Arduino based on which on-screen zone the object's centroid falls into.
 
-## Computer Vision controller (Python)
+## License
 
-`color_tracker.py` opens your webcam, tracks a chosen color object, and sends `F`/`B`/`L`/`R`/`S` over Serial to the Arduino based on which on-screen zone the object is in.
-
-1. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-2. Open `color_tracker.py` and set `SERIAL_PORT` to your Arduino's port
-   (Windows: `COM3`, `COM4`... / Mac-Linux: `/dev/ttyUSB0` or `/dev/ttyACM0`)
-3. Run it:
-   ```
-   python color_tracker.py
-   ```
-4. Pick a color from the menu, hold up a matching colored object in front of the webcam, and move it across the on-screen zones (up/down/left/right/middle) to drive the bot. Press `ESC` to quit.
-
-## © Copyright
-
-© 2026 Abhay Raj. All Rights Reserved.
-
-This project, including its source code, documentation, and original implementation, is the intellectual property of Abhay Raj. Unauthorized copying, reproduction, modification, redistribution, or commercial use of this project or any substantial part of it is prohibited without prior written permission from the author.
+All rights reserved — source code is private and not licensed for reuse.
